@@ -9,7 +9,13 @@ from typing_extensions import TypedDict
 import gradio as gr
 
 
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY", "")  # Set via environment variable
+_api_key = os.getenv("OPENAI_API_KEY")
+if not _api_key:
+    raise EnvironmentError(
+        "OPENAI_API_KEY environment variable is not set. "
+        "Please export it before running this application."
+    )
+os.environ["OPENAI_API_KEY"] = _api_key
 
 llm = ChatOpenAI(model_name="gpt-4o-mini")
 
